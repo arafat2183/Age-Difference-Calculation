@@ -1,7 +1,28 @@
-import java.util.Scanner;
+import java.time.Year;
+import java.util.*;
 
 public class AgeDifferenceCalculation {
     public static void main(String[] args) {
+        AgeDifferenceCalculation ageDifferenceCalculation = new AgeDifferenceCalculation();
+
+        List person1DOB = ageDifferenceCalculation.personAgeDefine();
+        System.out.print("date of birth is: " + person1DOB.get(0) + "年" + person1DOB.get(1) + "月" + person1DOB.get(2) + "日");
+
+//        System.out.println(person1DOB.get(0).getClass().getName());
+
+        System.out.println("");
+
+        List person2DOB = ageDifferenceCalculation.personAgeDefine();
+        System.out.print("date of birth is: " + person2DOB.get(0) + "年" + person2DOB.get(1) + "月" + person2DOB.get(2) + "日");
+
+        if ((int) person1DOB.getFirst() > (int) person2DOB.getFirst()) {
+            if ((int) person1DOB.get(1) < (int) person2DOB.get(1)) {
+                int personDateOfAgeUpdated = (int) person1DOB.get(1) + 30;
+            }
+        }
+    }
+
+    public List<Integer> personAgeDefine() {
         AgeDifferenceCalculation ageDifferenceCalculation = new AgeDifferenceCalculation();
         Scanner sc = new Scanner(System.in);
 
@@ -21,11 +42,16 @@ public class AgeDifferenceCalculation {
         int person1BirthDay = sc.nextInt();
         person1BirthDay = ageDifferenceCalculation.birthDayhVerification(person1BirthYear, person1BirthMonth, person1BirthDay);
 
-        System.out.print(person1 + "'s " + "date of birth is: " + person1BirthYear + "年" + person1BirthMonth + "月" + person1BirthDay + "日");
+        List<Integer> yearMonthDay = new ArrayList<>();
+        Collections.addAll(yearMonthDay, person1BirthYear, person1BirthMonth, person1BirthDay);
+
+        return yearMonthDay;
     }
 
     public int birthYearVerification(int person1BirthYear) {
-        while (person1BirthYear < 1900) {
+        Calendar cal = Calendar.getInstance();
+        int thisYear = cal.get(Calendar.YEAR);
+        while (person1BirthYear < 1900 || person1BirthYear >= thisYear) {
             Scanner sc = new Scanner(System.in);
             person1BirthYear = sc.nextInt();
         }
@@ -42,6 +68,10 @@ public class AgeDifferenceCalculation {
 
     public int birthDayhVerification(int person1BirthYear, int person1BirthMonth, int person1BirthDay) {
         Scanner sc = new Scanner(System.in);
+        List<Integer> monthsWith30 = new ArrayList<>();
+        List<Integer> monthsWith31 = new ArrayList<>();
+        Collections.addAll(monthsWith30, 4, 6, 9, 11);
+        Collections.addAll(monthsWith31, 1, 3, 5, 7, 8, 10, 12);
         if (person1BirthDay <= 0) {
             while (person1BirthDay <= 0) {
                 person1BirthDay = sc.nextInt();
@@ -65,6 +95,14 @@ public class AgeDifferenceCalculation {
                     }
                 }
 
+            } else if (monthsWith30.contains(person1BirthMonth)) {
+                while (person1BirthDay > 30) {
+                    person1BirthDay = sc.nextInt();
+                };
+            } else if (monthsWith31.contains(person1BirthMonth)) {
+                while (person1BirthDay > 31) {
+                    person1BirthDay = sc.nextInt();
+                };
             }
         }
         return person1BirthDay;
