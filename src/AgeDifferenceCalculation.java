@@ -15,10 +15,56 @@ public class AgeDifferenceCalculation {
         List person2DOB = ageDifferenceCalculation.personAgeDefine();
         System.out.print("date of birth is: " + person2DOB.get(0) + "年" + person2DOB.get(1) + "月" + person2DOB.get(2) + "日");
 
+        int resultDay;
+        int newMonth;
+        int resultMonth;
+        int newYear;
+
         if ((int) person1DOB.getFirst() > (int) person2DOB.getFirst()) {
-            if ((int) person1DOB.get(1) < (int) person2DOB.get(1)) {
-                int personDateOfAgeUpdated = (int) person1DOB.get(1) + 30;
+
+            if ((int) person1DOB.get(2) < (int) person2DOB.get(2)) {
+                int personDateOfAgeUpdated = (int) person1DOB.get(2) + 30;
+                resultDay = personDateOfAgeUpdated - (int) person2DOB.get(2);
+                newMonth = (int) person1DOB.get(1) - 1;
+            } else {
+                resultDay = (int) person1DOB.get(2) - (int) person2DOB.get(2);
+                newMonth = (int) person1DOB.get(1);
             }
+
+            if (newMonth < (int) person2DOB.get(1)) {
+                int personMonthOfAgeUpdated = newMonth + 12;
+                resultMonth = personMonthOfAgeUpdated - (int) person2DOB.get(1);
+                newYear = (int) person1DOB.get(0) - 1;
+            } else {
+                resultMonth = newMonth - (int) person2DOB.get(1);
+                newYear = (int) person1DOB.get(0);
+            }
+
+            int resultYear = newYear - (int) person2DOB.getFirst();
+
+            System.out.println("Age difference is: " + resultYear + "年" + resultMonth + "月" + resultDay + "日");
+        } else {
+            if ((int) person2DOB.get(2) < (int) person1DOB.get(2)) {
+                int personDateOfAgeUpdated = (int) person2DOB.get(2) + 30;
+                resultDay = personDateOfAgeUpdated - (int) person1DOB.get(2);
+                newMonth = (int) person2DOB.get(1) - 1;
+            } else {
+                resultDay = (int) person2DOB.get(2) - (int) person1DOB.get(2);
+                newMonth = (int) person2DOB.get(1);
+            }
+
+            if (newMonth < (int) person1DOB.get(1)) {
+                int personMonthOfAgeUpdated = newMonth + 12;
+                resultMonth = personMonthOfAgeUpdated - (int) person1DOB.get(1);
+                newYear = (int) person2DOB.get(0) - 1;
+            } else {
+                resultMonth = newMonth - (int) person1DOB.get(1);
+                newYear = (int) person2DOB.get(0);
+            }
+
+            int resultYear = newYear - (int) person1DOB.getFirst();
+
+            System.out.println("Age difference is: " + resultYear + "年" + resultMonth + "月" + resultDay + "日");
         }
     }
 
